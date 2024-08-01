@@ -1,0 +1,14 @@
+Environment endpoint url:http://imageprocess-dev.us-east-1.elasticbeanstalk.com/
+
+## Image process API Endpoints
+1. GET /filteredimage?image_url={{URL}}
+
+## Token generation API Endpoints (for testing)
+1. GET /token
+
+## Project Details
+1. The project is a simple image processing API that takes an image URL and returns the processed image.
+2. The project is deployed on AWS Elastic Beanstalk.
+3. Added authencation by import requiresAuthMiddleware.js and its dependencies. ( Updated the code to run properly)
+4. Added validateImageUrl function to validate the image URL in util.ts.
+5. Added the token generation API for testing purposes.
