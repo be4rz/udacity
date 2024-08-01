@@ -42,9 +42,9 @@ app.get("/filteredimage", requiresAuth() ,async (req, res) => {
   console.log("-----------Received image url: " + image_url + "-----------");
 
   //validate image url
-  const isImageUrl = validateImageUrl(image_url);
+  const isImageUrl = await validateImageUrl(image_url);
   if ( !image_url || !isImageUrl ){
-    res.status(400).send("Bad Request: Invalid image url.")
+    return res.status(400).send("Bad Request: Invalid image url.")
   }
 
   //filter the image and send response with image
@@ -65,7 +65,7 @@ app.get("/filteredimage", requiresAuth() ,async (req, res) => {
     });
   }).catch(error => {
     console.log("---Error processing image");
-    res.status(500).send("Internal Server Error: An error occurred while processing the image.")
+    return res.status(500).send("Internal Server Error: An error occurred while processing the image.")
   });
 });
 
