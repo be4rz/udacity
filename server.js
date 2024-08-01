@@ -1,7 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
+import { requiresAuth } from "./middleware/requiresAuthMiddleware.js";
 import { filterImageFromURL, deleteLocalFiles, validateImageUrl } from "./util/util.js";
+import tokenService from "./service/tokenService.js";
+
+//uncaughtException handler
+process.on('uncaughtException', error => {
+  console.error(error);
+  console.log("Uncaught Exception happened. Continue running the server.");
+});
 
 // Init the Express application
 const app = express();
@@ -28,10 +36,10 @@ app.use(bodyParser.json());
 
 /**************************************************************************** */
 
-app.get("/filteredimage", async (req, res) => {
+app.get("/filteredimage", requiresAuth() ,async (req, res) => {
   //deconstruct image_url
   let { image_url } = req.query;
-  console.log("Received image url: " + image_url);
+  console.log("-----------Received image url: " + image_url + "-----------");
 
   //validate image url
   const isImageUrl = validateImageUrl(image_url);
@@ -63,8 +71,15 @@ app.get("/filteredimage", async (req, res) => {
 
 //! END @TODO1
 
+//endpoint to get token for testing purpose
+app.get("/token", async (req, res) => {
+  const user = { email: "test@email.com"};
+  const token = await tokenService.generateTokens(user);
+  res.status(200).json(token);
+})
+
 // Root Endpoint
-// Displays a simple message to the user
+// Displays a simple message to the users
 app.get("/", async (req, res) => {
   res.send("try GET /filteredimage?image_url={{}}");
 });
