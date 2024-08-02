@@ -12,3 +12,8 @@ Environment endpoint url:http://imageprocess-dev.us-east-1.elasticbeanstalk.com/
 3. Added authencation by import requiresAuthMiddleware.js and its dependencies. ( Updated the code to run properly)
 4. Added validateImageUrl function to validate the image URL in util.ts.
 5. Added the token generation API for testing purposes.
+
+## Resubmit Details
+1. Added script 'dev' used for development.
+2. In 'tokenService.js', changed from using an asymmetric key to a secret key for generating and verifying tokens to make local testing easier.
+3. A secret key will be provided through the submission note to avoid leaks, but you can also use your own secret key defined in the .env file.
